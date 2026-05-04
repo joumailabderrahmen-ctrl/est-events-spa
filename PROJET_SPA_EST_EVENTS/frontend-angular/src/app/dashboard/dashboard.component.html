@@ -1,0 +1,152 @@
+<!-- HEADER -->
+<div class="dashboard-header text-white py-5">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+      <div>
+        <h1 class="fw-bold display-5 mb-1"><i class="bi bi-bar-chart me-2"></i>Dashboard</h1>
+        <p class="lead opacity-75 mb-0">Vue d'ensemble de la plateforme EST Events</p>
+      </div>
+      <div class="ws-indicator d-flex align-items-center gap-2 bg-white bg-opacity-10 rounded-pill px-3 py-2">
+        <span class="ws-dot" [class.active]="activeCount > 0"></span>
+        <span class="small fw-semibold">{{ activeCount }} connecté{{ activeCount > 1 ? 's' : '' }} en temps réel</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container py-5">
+
+  <!-- SPINNER -->
+  <div class="text-center py-5" *ngIf="loading">
+    <div class="spinner-border text-primary" style="width:3rem;height:3rem;"></div>
+    <p class="mt-3 text-muted">Chargement des statistiques...</p>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="row g-4 mb-5" [hidden]="loading">
+    <div class="col-sm-6 col-xl-3">
+      <div class="kpi-card card shadow-sm h-100 p-4">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <div class="kpi-label">Total Événements</div>
+            <div class="kpi-value">{{ stats.totalEvents || 0 }}</div>
+          </div>
+          <div class="kpi-icon" style="background:#e8eaf6; color:var(--est-primary);">
+            <i class="bi bi-calendar-check fs-3"></i>
+          </div>
+        </div>
+        <div class="kpi-bar" style="background:var(--est-primary);"></div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+      <div class="kpi-card card shadow-sm h-100 p-4">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <div class="kpi-label">Événements Gratuits</div>
+            <div class="kpi-value text-success">{{ stats.freeEvents || 0 }}</div>
+          </div>
+          <div class="kpi-icon" style="background:#d4edda; color:#28a745;">
+            <i class="bi bi-gift fs-3"></i>
+          </div>
+        </div>
+        <div class="kpi-bar" style="background:#28a745;"></div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+      <div class="kpi-card card shadow-sm h-100 p-4">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <div class="kpi-label">Événements Payants</div>
+            <div class="kpi-value text-warning">{{ stats.paidEvents || 0 }}</div>
+          </div>
+          <div class="kpi-icon" style="background:#fff3cd; color:#FFB300;">
+            <i class="bi bi-ticket-perforated fs-3"></i>
+          </div>
+        </div>
+        <div class="kpi-bar" style="background:#FFB300;"></div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+      <div class="kpi-card card shadow-sm h-100 p-4">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <div class="kpi-label">Total Réservations</div>
+            <div class="kpi-value text-info">{{ stats.totalReservations || 0 }}</div>
+          </div>
+          <div class="kpi-icon" style="background:#cce5ff; color:#0d6efd;">
+            <i class="bi bi-check-circle fs-3"></i>
+          </div>
+        </div>
+        <div class="kpi-bar" style="background:#0d6efd;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRAPHIQUES — canvas toujours dans le DOM, cachés pendant le chargement -->
+  <div class="row g-4 mb-5" [hidden]="loading">
+    <div class="col-lg-5">
+      <div class="card shadow-sm p-4 h-100">
+        <canvas #pieChart></canvas>
+      </div>
+    </div>
+    <div class="col-lg-7">
+      <div class="card shadow-sm p-4 h-100">
+        <canvas #barChart></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLEAU RÉSERVATIONS -->
+  <div class="card shadow-sm" [hidden]="loading">
+    <div class="card-header bg-white d-flex align-items-center justify-content-between py-3">
+      <h6 class="fw-bold mb-0" style="color:var(--est-primary)">
+        <i class="bi bi-table me-2"></i>5 Dernières Réservations
+      </h6>
+      <span class="badge bg-secondary">{{ reservations.length }} affichées</span>
+    </div>
+    <div class="card-body p-0">
+      <div class="text-center py-4 text-muted" *ngIf="reservations.length === 0">
+        <i class="bi bi-inbox display-5 opacity-50"></i>
+        <p class="mt-2 small">Aucune réservation enregistrée.</p>
+      </div>
+      <div class="table-responsive" *ngIf="reservations.length > 0">
+        <table class="table table-hover table-striped align-middle mb-0">
+          <thead class="table-dark">
+            <tr>
+              <th class="ps-4">Étudiant</th>
+              <th>Événements</th>
+              <th>Total</th>
+              <th>Statut</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let r of reservations">
+              <td class="ps-4">
+                <div class="fw-semibold">{{ r.studentName }}</div>
+                <div class="text-muted small">{{ r.studentEmail }}</div>
+              </td>
+              <td>
+                <div *ngFor="let e of r.events" class="small">
+                  <i class="bi bi-dot text-primary"></i>{{ e.title }}
+                </div>
+              </td>
+              <td class="fw-bold">
+                <span [class.text-success]="r.total===0" [class.text-warning]="r.total>0">
+                  {{ r.total === 0 ? 'GRATUIT' : r.total + ' MAD' }}
+                </span>
+              </td>
+              <td>
+                <span class="badge" [class]="getStatusClass(r.status)">
+                  {{ getStatusLabel(r.status) }}
+                </span>
+              </td>
+              <td class="text-muted small">{{ r.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>

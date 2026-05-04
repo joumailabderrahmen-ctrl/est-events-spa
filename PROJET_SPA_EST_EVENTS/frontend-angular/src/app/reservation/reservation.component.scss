@@ -1,0 +1,100 @@
+.page-header {
+  background: linear-gradient(135deg, var(--est-primary) 0%, #283593 100%);
+  padding-top: 4rem !important;
+  padding-bottom: 4rem !important;
+}
+
+/* ── SOURCE LIST ── */
+.events-source {
+  max-height: 600px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 4px;
+}
+
+.source-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  background: #fff;
+  cursor: grab;
+  transition: box-shadow 0.2s, border-color 0.2s, opacity 0.2s;
+
+  &:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.12); border-color: var(--est-primary); }
+  &.in-cart { opacity: 0.55; cursor: not-allowed; background: #f8f9fa; }
+  &.dragging { opacity: 0.4; transform: scale(0.98); }
+}
+
+.source-img {
+  width: 64px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.source-info { flex: 1; min-width: 0; }
+.source-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.add-btn { flex-shrink: 0; }
+
+/* ── DROP ZONE ── */
+.drop-zone {
+  min-height: 200px;
+  border: 2px dashed #ced4da;
+  border-radius: 12px;
+  background: #fafbff;
+  transition: all 0.2s;
+  padding: 12px;
+
+  &.drag-over {
+    border-color: var(--est-primary);
+    background: rgba(26, 35, 126, 0.05);
+    box-shadow: inset 0 0 0 3px rgba(26,35,126,0.15);
+    transform: scale(1.01);
+  }
+
+  &.has-items {
+    border-style: solid;
+    border-color: #dee2e6;
+  }
+}
+
+/* ── CART ITEMS ── */
+.cart-items { display: flex; flex-direction: column; gap: 8px; }
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  animation: slideIn 0.2s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cart-item-img {
+  width: 56px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+/* ── CONFIRM CARD ── */
+.confirm-card { border-top: 4px solid var(--est-gold, #FFB300); }

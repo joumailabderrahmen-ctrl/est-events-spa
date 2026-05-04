@@ -1,0 +1,84 @@
+.navbar { box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+
+.nav-link {
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  transition: background 0.2s;
+
+  &.active, &:hover {
+    background-color: rgba(255,179,0,0.15);
+    color: #FFB300 !important;
+  }
+}
+
+/* ── Logo animé ─────────────────────────────── */
+.nav-logo {
+  cursor: pointer;
+
+  .logo-ring {
+    transform-origin: 25px 25px;
+    animation: spin-slow 8s linear infinite;
+  }
+
+  .logo-icon {
+    stroke-dasharray: 80;
+    stroke-dashoffset: 80;
+    animation: draw-icon 6s ease-in-out infinite;
+  }
+
+  .logo-line {
+    stroke-dasharray: 15;
+    stroke-dashoffset: 15;
+    animation: draw-line 6s ease-in-out infinite;
+  }
+
+  .logo-text-est {
+    opacity: 0;
+    animation: fade-loop 6s ease-in-out infinite;
+  }
+
+  .logo-text-ev {
+    opacity: 0;
+    animation: fade-loop-ev 6s ease-in-out infinite;
+  }
+
+  &:hover .logo-ring {
+    animation: spin-fast 1s linear infinite;
+    stroke: #fff;
+  }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes spin-fast {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes draw-icon {
+  0%, 5%    { stroke-dashoffset: 80; }
+  28%, 72%  { stroke-dashoffset: 0; }
+  95%, 100% { stroke-dashoffset: 80; }
+}
+
+@keyframes draw-line {
+  0%, 15%   { stroke-dashoffset: 15; }
+  38%, 72%  { stroke-dashoffset: 0; }
+  92%, 100% { stroke-dashoffset: 15; }
+}
+
+@keyframes fade-loop {
+  0%, 26%   { opacity: 0; }
+  40%, 72%  { opacity: 1; }
+  92%, 100% { opacity: 0; }
+}
+
+@keyframes fade-loop-ev {
+  0%, 32%   { opacity: 0; }
+  45%, 72%  { opacity: 1; }
+  92%, 100% { opacity: 0; }
+}

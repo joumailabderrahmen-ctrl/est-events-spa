@@ -1,0 +1,179 @@
+<div class="page-header py-5 text-white text-center">
+  <div class="container">
+    <h1 class="fw-bold display-5"><i class="bi bi-person-circle me-2"></i>Mon Profil</h1>
+    <p class="lead opacity-75">Gérez vos informations et votre historique de réservations</p>
+  </div>
+</div>
+
+<div class="container py-5">
+  <div class="row g-4">
+
+    <!-- ── COLONNE GAUCHE : AVATAR + WEBCAM ── -->
+    <div class="col-lg-4">
+      <div class="card shadow-sm p-4 text-center h-100">
+
+        <!-- AVATAR -->
+        <div class="avatar-wrapper mx-auto mb-3">
+          <img [src]="photoSrc" alt="Avatar" class="avatar-img"
+            onerror="this.src='assets/images/avatar-default.png'">
+        </div>
+
+        <!-- WEBCAM LIVE -->
+        <div class="webcam-wrapper mb-3" *ngIf="cameraActive">
+          <video #videoEl class="webcam-video" autoplay playsinline></video>
+          <canvas #canvasEl class="d-none"></canvas>
+        </div>
+        <canvas #canvasEl class="d-none" *ngIf="!cameraActive"></canvas>
+
+        <!-- ERREUR CAMÉRA -->
+        <div class="alert alert-danger small py-2" *ngIf="cameraError">
+          <i class="bi bi-exclamation-triangle me-1"></i>{{ cameraError }}
+        </div>
+
+        <!-- BOUTONS WEBCAM -->
+        <div class="d-flex flex-column gap-2">
+          <button class="btn btn-outline-primary btn-sm" *ngIf="!cameraActive" (click)="startCamera()">
+            <i class="bi bi-camera me-2"></i>Prendre une photo
+          </button>
+          <ng-container *ngIf="cameraActive">
+            <button class="btn btn-success btn-sm" (click)="capture()">
+              <i class="bi bi-camera-fill me-2"></i>Capturer
+            </button>
+            <button class="btn btn-outline-secondary btn-sm" (click)="stopCamera()">
+              <i class="bi bi-x-circle me-2"></i>Annuler
+            </button>
+          </ng-container>
+          <button class="btn btn-outline-danger btn-sm" (click)="resetPhoto()"
+            *ngIf="photoSrc !== 'assets/images/avatar-default.png'">
+            <i class="bi bi-arrow-counterclockwise me-2"></i>Réinitialiser
+          </button>
+        </div>
+
+        <hr>
+        <p class="small text-muted mb-0">
+          <i class="bi bi-info-circle me-1 text-primary"></i>
+          La photo est sauvegardée localement dans votre navigateur.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── COLONNE DROITE : FORMULAIRE ── -->
+    <div class="col-lg-8">
+      <div class="card shadow-sm p-4 mb-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+          <h5 class="fw-bold mb-0" style="color: var(--est-primary)">
+            <i class="bi bi-pencil-square me-2"></i>Informations personnelles
+          </h5>
+          <span class="badge bg-success saved-badge" *ngIf="savedIndicator">
+            <i class="bi bi-check-circle me-1"></i>Profil sauvegardé ✓
+          </span>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="save()">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Nom <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="nom"
+                [class.is-invalid]="fieldInvalid('nom')" placeholder="Votre nom">
+              <div class="invalid-feedback">Nom requis (min 2 caractères).</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Prénom <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="prenom"
+                [class.is-invalid]="fieldInvalid('prenom')" placeholder="Votre prénom">
+              <div class="invalid-feedback">Prénom requis (min 2 caractères).</div>
+            </div>
+            <div class="col-12">
+              <label class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
+              <input type="email" class="form-control" formControlName="email"
+                [class.is-invalid]="fieldInvalid('email')" placeholder="votre&#64;email.ma">
+              <div class="invalid-feedback">Email valide requis.</div>
+            </div>
+            <div class="col-12">
+              <label class="form-label fw-semibold">Établissement</label>
+              <input type="text" class="form-control" formControlName="etablissement">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Filière</label>
+              <select class="form-select" formControlName="filiere">
+                <option *ngFor="let f of filieres" [value]="f">{{ f }}</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Année</label>
+              <select class="form-select" formControlName="annee">
+                <option *ngFor="let a of annees" [value]="a">{{ a }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <button type="submit" class="btn btn-warning fw-bold px-4">
+              <i class="bi bi-save me-2"></i>Enregistrer le profil
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- ── HISTORIQUE RÉSERVATIONS ── -->
+      <div class="card shadow-sm p-4">
+        <h5 class="fw-bold mb-4" style="color: var(--est-primary)">
+          <i class="bi bi-clock-history me-2"></i>Historique des réservations
+        </h5>
+
+        <div class="text-center py-3" *ngIf="loadingReservations">
+          <div class="spinner-border spinner-border-sm text-primary"></div>
+        </div>
+
+        <div class="text-center text-muted py-3" *ngIf="!loadingReservations && reservations.length === 0">
+          <i class="bi bi-calendar-x display-5 opacity-50"></i>
+          <p class="mt-2 small">Aucune réservation trouvée pour cet email.</p>
+        </div>
+
+        <div class="table-responsive" *ngIf="reservations.length > 0">
+          <table class="table table-hover table-sm align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Événements</th>
+                <th>Total</th>
+                <th>Statut</th>
+                <th>Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let r of reservations" [class.opacity-50]="r.status === 'cancelled'">
+                <td>
+                  <div *ngFor="let e of r.events" class="small">
+                    <i class="bi bi-dot text-primary"></i>{{ e.title }}
+                  </div>
+                </td>
+                <td class="fw-semibold">
+                  {{ r.total === 0 ? 'GRATUIT' : r.total + ' MAD' }}
+                </td>
+                <td>
+                  <span class="badge" [class]="getStatusClass(r.status)">
+                    {{ getStatusLabel(r.status) }}
+                  </span>
+                </td>
+                <td class="small text-muted">
+                  {{ r.createdAt | date:'dd/MM/yyyy' }}
+                </td>
+                <td>
+                  <button *ngIf="r.status !== 'cancelled'"
+                          class="btn btn-outline-danger btn-sm"
+                          [disabled]="cancellingId === r._id"
+                          (click)="cancelReservation(r._id)">
+                    <span *ngIf="cancellingId === r._id" class="spinner-border spinner-border-sm"></span>
+                    <i *ngIf="cancellingId !== r._id" class="bi bi-x-circle"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

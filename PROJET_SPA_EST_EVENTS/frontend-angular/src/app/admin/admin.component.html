@@ -1,0 +1,177 @@
+<div class="admin-page">
+  <!-- Toast -->
+  <div class="toast-notif" [class.show]="toast" [class]="'toast-notif alert-' + toastType" *ngIf="toast">
+    <i class="bi" [class.bi-check-circle-fill]="toastType==='success'" [class.bi-x-circle-fill]="toastType==='danger'"></i>
+    {{ toast }}
+  </div>
+
+  <div class="admin-header">
+    <h1><i class="bi bi-shield-lock-fill me-2"></i>Interface Admin</h1>
+    <p>Gestion des événements et réservations EST Dakhla</p>
+  </div>
+
+  <!-- Tabs -->
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="activeTab==='events'" (click)="activeTab='events'">
+        <i class="bi bi-calendar-event me-1"></i>Événements
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="activeTab==='reservations'" (click)="activeTab='reservations'">
+        <i class="bi bi-ticket-perforated me-1"></i>Réservations
+      </button>
+    </li>
+  </ul>
+
+  <!-- EVENTS TAB -->
+  <div *ngIf="activeTab==='events'">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="mb-0">{{ events.length }} événements</h5>
+      <button class="btn btn-primary" (click)="openCreate()">
+        <i class="bi bi-plus-lg me-1"></i>Nouvel événement
+      </button>
+    </div>
+
+    <!-- Event Form Modal -->
+    <div class="modal-overlay" *ngIf="showForm" (click)="showForm=false"></div>
+    <div class="event-form-panel" *ngIf="showForm">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0">{{ editingId ? 'Modifier' : 'Créer' }} un événement</h5>
+        <button class="btn-close" (click)="showForm=false"></button>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="row g-3">
+          <div class="col-12">
+            <label class="form-label">Titre *</label>
+            <input type="text" formControlName="title" class="form-control" placeholder="Titre de l'événement">
+          </div>
+          <div class="col-12">
+            <label class="form-label">Description</label>
+            <textarea formControlName="description" class="form-control" rows="3"></textarea>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Date *</label>
+            <input type="datetime-local" formControlName="date" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Catégorie</label>
+            <select formControlName="category" class="form-select">
+              <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Prix (MAD)</label>
+            <input type="number" formControlName="price" class="form-control" min="0">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Capacité</label>
+            <input type="number" formControlName="capacity" class="form-control" min="1">
+          </div>
+          <div class="col-12">
+            <label class="form-label">Lieu</label>
+            <input type="text" formControlName="location" class="form-control" placeholder="Salle / lieu">
+          </div>
+          <div class="col-12">
+            <label class="form-label">Image (JPG/PNG/WEBP, max 5 Mo)</label>
+            <input type="file" class="form-control" accept=".jpg,.jpeg,.png,.webp" (change)="onFileChange($event)">
+            <small class="text-muted" *ngIf="selectedFile">Fichier : {{ selectedFile.name }}</small>
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-4">
+          <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+            <i class="bi bi-save me-1"></i>{{ editingId ? 'Modifier' : 'Créer' }}
+          </button>
+          <button type="button" class="btn btn-outline-secondary" (click)="showForm=false">Annuler</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Events Table -->
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Titre</th>
+            <th>Date</th>
+            <th>Catégorie</th>
+            <th>Prix</th>
+            <th>Capacité</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let event of events">
+            <td>
+              <img [src]="getEventImage(event)"
+                   class="event-thumb" alt="img"
+                   (error)="$any($event.target).src='https://picsum.photos/seed/' + event._id + '/60/40'">
+            </td>
+            <td><strong>{{ event.title }}</strong></td>
+            <td>{{ event.date | date:'dd/MM/yy HH:mm' }}</td>
+            <td><span class="badge bg-primary">{{ event.category }}</span></td>
+            <td>{{ event.price === 0 ? 'Gratuit' : event.price + ' MAD' }}</td>
+            <td>{{ event.capacity }}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-1" (click)="openEdit(event)">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteEvent(event._id)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- RESERVATIONS TAB -->
+  <div *ngIf="activeTab==='reservations'">
+    <h5 class="mb-3">{{ reservations.length }} réservations</h5>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th>Étudiant</th>
+            <th>Email</th>
+            <th>Événements</th>
+            <th>Total</th>
+            <th>Statut</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of reservations">
+            <td><strong>{{ r.studentName }}</strong></td>
+            <td>{{ r.studentEmail }}</td>
+            <td>
+              <span *ngFor="let e of r.events" class="badge bg-secondary me-1">{{ e.title }}</span>
+            </td>
+            <td>{{ r.total }} MAD</td>
+            <td>
+              <span class="badge" [class]="'bg-' + statusBadge(r.status)">{{ r.status }}</span>
+            </td>
+            <td>{{ r.createdAt | date:'dd/MM/yy' }}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-success me-1"
+                      *ngIf="r.status === 'pending'"
+                      (click)="confirmReservation(r._id)">
+                <i class="bi bi-check-lg"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger"
+                      *ngIf="r.status !== 'cancelled'"
+                      (click)="cancelReservation(r._id)">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

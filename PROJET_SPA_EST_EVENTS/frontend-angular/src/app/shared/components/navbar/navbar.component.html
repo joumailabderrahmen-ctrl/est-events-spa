@@ -1,0 +1,95 @@
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: var(--est-primary);">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/">
+      <svg class="nav-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" width="150" height="38">
+        <!-- Cercle animé -->
+        <circle class="logo-ring" cx="25" cy="25" r="20" fill="rgba(255,255,255,0.08)" stroke="#FFB300" stroke-width="1.5"/>
+        <!-- Icône livre -->
+        <path class="logo-icon" d="M16 25 L22 18 L34 18 L34 32 L16 32 Z" fill="none" stroke="#FFB300" stroke-width="2"/>
+        <line class="logo-line" x1="19" y1="22" x2="31" y2="22" stroke="#FFB300" stroke-width="1.5"/>
+        <line class="logo-line" x1="19" y1="25" x2="31" y2="25" stroke="#FFB300" stroke-width="1.5"/>
+        <line class="logo-line" x1="19" y1="28" x2="27" y2="28" stroke="#FFB300" stroke-width="1.5"/>
+        <!-- Texte -->
+        <text class="logo-text-est" x="52" y="20" font-family="Segoe UI, sans-serif" font-weight="700" font-size="16" fill="white">EST</text>
+        <text class="logo-text-ev"  x="52" y="38" font-family="Segoe UI, sans-serif" font-weight="400" font-size="13" fill="#FFB300">Events</text>
+      </svg>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+            <i class="bi bi-house-door me-1"></i>Accueil
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/events" routerLinkActive="active">
+            <i class="bi bi-calendar-event me-1"></i>Événements
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/weblab" routerLinkActive="active">
+            <i class="bi bi-code-slash me-1"></i>WebLab
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/apis" routerLinkActive="active">
+            <i class="bi bi-cpu me-1"></i>APIs
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
+            <i class="bi bi-bar-chart me-1"></i>Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contact" routerLinkActive="active">
+            <i class="bi bi-envelope me-1"></i>Contact
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/apropos" routerLinkActive="active">
+            <i class="bi bi-person-badge me-1"></i>À propos
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="auth.isAdmin">
+          <a class="nav-link text-warning fw-bold" routerLink="/admin" routerLinkActive="active">
+            <i class="bi bi-shield-lock me-1"></i>Admin
+          </a>
+        </li>
+      </ul>
+
+      <div class="d-flex align-items-center gap-2">
+        <a routerLink="/reservation" class="btn btn-outline-warning btn-sm position-relative">
+          <i class="bi bi-cart3 me-1"></i>Panier
+          <span *ngIf="cartCount > 0"
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ cartCount }}
+          </span>
+        </a>
+
+        <ng-container *ngIf="currentUser; else guestBtns">
+          <a routerLink="/profil" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-person-circle me-1"></i>{{ currentUser.name.split(' ')[0] }}
+          </a>
+          <button class="btn btn-outline-danger btn-sm" (click)="logout()">
+            <i class="bi bi-box-arrow-right"></i>
+          </button>
+        </ng-container>
+
+        <ng-template #guestBtns>
+          <a routerLink="/login" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-box-arrow-in-right me-1"></i>Connexion
+          </a>
+          <a routerLink="/register" class="btn btn-warning btn-sm text-dark fw-bold">
+            <i class="bi bi-person-plus me-1"></i>S'inscrire
+          </a>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</nav>

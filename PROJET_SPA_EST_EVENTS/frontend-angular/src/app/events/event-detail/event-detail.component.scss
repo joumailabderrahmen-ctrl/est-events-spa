@@ -1,0 +1,29 @@
+.detail-hero {
+  height: 420px;
+  overflow: hidden;
+}
+
+.detail-hero-img {
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.detail-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%);
+}
+
+.info-block {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-left: 3px solid var(--est-primary);
+}
+
+.reservation-card { border-top: 4px solid var(--est-gold, #FFB300); }
+
+@media (max-width: 768px) {
+  .detail-hero { height: 250px; }
+}

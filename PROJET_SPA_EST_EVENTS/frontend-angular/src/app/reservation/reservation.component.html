@@ -1,0 +1,173 @@
+<div class="page-header py-5 text-white text-center">
+  <div class="container">
+    <h1 class="fw-bold display-5"><i class="bi bi-cart3 me-2"></i>Panier & Réservation</h1>
+    <p class="lead opacity-75">Glissez les événements dans le panier puis confirmez votre réservation</p>
+  </div>
+</div>
+
+<div class="container py-5">
+  <div class="row g-4">
+
+    <!-- ── ZONE SOURCE (gauche) ── -->
+    <div class="col-lg-5">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h5 class="fw-bold mb-0" style="color: var(--est-primary)">
+          <i class="bi bi-calendar-event me-2"></i>Événements disponibles
+        </h5>
+        <span class="badge bg-secondary">{{ availableEvents.length }}</span>
+      </div>
+      <p class="text-muted small mb-3">
+        <i class="bi bi-hand-index me-1 text-warning"></i>
+        Glissez un événement vers le panier ou cliquez sur <strong>+</strong>
+      </p>
+
+      <div class="events-source">
+        <div *ngFor="let event of availableEvents"
+          class="source-card"
+          [class.in-cart]="isInCart(event._id)"
+          draggable="true"
+          (dragstart)="onDragStart($event, event._id)"
+          (dragend)="onDragEnd($event)">
+          <img [src]="'assets/images/event-' + event.category + '.jpg'"
+            [alt]="event.title" class="source-img"
+            (error)="onImgError($event, event.category)">
+          <div class="source-info">
+            <span class="badge bg-primary small mb-1">{{ event.category }}</span>
+            <div class="fw-semibold small source-title">{{ event.title }}</div>
+            <div class="small text-muted">{{ event.date | date:'d MMM yyyy' : '' : 'fr' }}</div>
+            <div class="fw-bold" [class.text-success]="event.isFree" [class.text-warning]="!event.isFree">
+              {{ event.isFree ? 'GRATUIT' : event.price + ' MAD' }}
+            </div>
+          </div>
+          <button class="add-btn btn btn-sm"
+            [class.btn-outline-primary]="!isInCart(event._id)"
+            [class.btn-success]="isInCart(event._id)"
+            [disabled]="isInCart(event._id)"
+            (click)="addEventToCart(event._id)">
+            <i class="bi" [class.bi-plus-lg]="!isInCart(event._id)" [class.bi-check-lg]="isInCart(event._id)"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ZONE DROP + FORMULAIRE (droite) ── -->
+    <div class="col-lg-7">
+
+      <!-- ZONE DROP -->
+      <h5 class="fw-bold mb-3" style="color: var(--est-primary)">
+        <i class="bi bi-bag-check me-2"></i>Mon panier
+        <span class="badge bg-warning text-dark ms-2">{{ cart.length }}</span>
+      </h5>
+
+      <div class="drop-zone mb-4"
+        [class.drag-over]="isDragOver"
+        [class.has-items]="cart.length > 0"
+        (dragover)="onDragOver($event)"
+        (dragenter)="onDragEnter($event)"
+        (dragleave)="onDragLeave($event)"
+        (drop)="onDrop($event)">
+
+        <!-- PLACEHOLDER VIDE -->
+        <div class="drop-placeholder text-center py-4" *ngIf="cart.length === 0">
+          <i class="bi bi-arrow-down-circle display-4 text-muted opacity-50"></i>
+          <p class="text-muted mt-2 mb-0">Déposez vos événements ici</p>
+          <p class="text-muted small">ou cliquez sur <strong>+</strong> dans la liste</p>
+        </div>
+
+        <!-- ITEMS PANIER -->
+        <div class="cart-items" *ngIf="cart.length > 0">
+          <div class="cart-item" *ngFor="let item of cart">
+            <img [src]="getImage(item)" [alt]="item.title" class="cart-item-img"
+              (error)="onImgError($event, item.category)">
+            <div class="cart-item-info flex-grow-1">
+              <div class="fw-semibold">{{ item.title }}</div>
+              <div class="small text-muted">{{ item.category }}</div>
+            </div>
+            <div class="fw-bold me-3" [class.text-success]="item.price===0" [class.text-warning]="item.price>0">
+              {{ item.price === 0 ? 'GRATUIT' : item.price + ' MAD' }}
+            </div>
+            <button class="btn btn-outline-danger btn-sm" (click)="removeFromCart(item.eventId)">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+
+          <!-- TOTAL -->
+          <div class="cart-total d-flex justify-content-between align-items-center px-3 py-2 mt-2 rounded-3"
+            style="background: var(--est-light);">
+            <span class="fw-bold">Total</span>
+            <span class="fw-bold fs-5" style="color: var(--est-primary)">
+              {{ getTotal() === 0 ? 'GRATUIT' : getTotal() + ' MAD' }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORMULAIRE CONFIRMATION -->
+      <div class="confirm-card card shadow-sm p-4">
+        <h6 class="fw-bold mb-4" style="color: var(--est-primary)">
+          <i class="bi bi-person-check me-2"></i>Vos informations
+        </h6>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Nom complet <span class="text-danger">*</span></label>
+              <input type="text" class="form-control"
+                formControlName="studentName"
+                [class.is-invalid]="fieldInvalid('studentName')"
+                placeholder="ex : Mohammed Amine">
+              <div class="invalid-feedback">
+                Nom requis (minimum 2 caractères).
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
+              <input type="email" class="form-control"
+                formControlName="studentEmail"
+                [class.is-invalid]="fieldInvalid('studentEmail')"
+                placeholder="ex : etudiant@est.ma">
+              <div class="invalid-feedback">
+                Email valide requis.
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex gap-3 align-items-center flex-wrap">
+            <button type="submit" class="btn btn-warning fw-bold px-4"
+              [disabled]="submitting || cart.length === 0">
+              <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2" role="status"></span>
+              <i *ngIf="!submitting" class="bi bi-check-circle me-2"></i>
+              {{ submitting ? 'Envoi en cours...' : 'Confirmer la réservation' }}
+            </button>
+            <button type="button" class="btn btn-outline-danger btn-sm"
+              *ngIf="cart.length > 0"
+              (click)="reservationService.clearCart()">
+              <i class="bi bi-trash me-1"></i>Vider le panier
+            </button>
+          </div>
+
+          <p class="text-muted small mt-3 mb-0" *ngIf="cart.length === 0">
+            <i class="bi bi-info-circle me-1 text-warning"></i>
+            Ajoutez au moins un événement pour confirmer.
+          </p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index:9999;">
+  <div class="toast show align-items-center border-0 text-white"
+    [class.bg-success]="toastType==='success'"
+    [class.bg-danger]="toastType==='danger'"
+    *ngIf="toastVisible">
+    <div class="d-flex">
+      <div class="toast-body">
+        <i class="bi me-2" [class.bi-check-circle]="toastType==='success'" [class.bi-exclamation-circle]="toastType==='danger'"></i>
+        {{ toastMessage }}
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" (click)="toastVisible=false"></button>
+    </div>
+  </div>
+</div>

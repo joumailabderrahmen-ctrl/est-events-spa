@@ -1,0 +1,34 @@
+# ── Dépendances ──────────────────────────────────────
+node_modules/
+
+# ── Variables d'environnement ─────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── Images uploadées (générées à l'exécution) ─────────
+PROJET_SPA_EST_EVENTS/backend-node/uploads/*
+!PROJET_SPA_EST_EVENTS/backend-node/uploads/.gitkeep
+
+# ── Build Angular ─────────────────────────────────────
+dist/
+.angular/
+
+# ── Couverture de tests ───────────────────────────────
+coverage/
+
+# ── Logs ──────────────────────────────────────────────
+*.log
+npm-debug.log*
+
+# ── OS ────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── IDE ───────────────────────────────────────────────
+.vscode/*
+!.vscode/settings.json
+.idea/
+
+# ── Claude Code (mémoire locale) ─────────────────────
+.claude/

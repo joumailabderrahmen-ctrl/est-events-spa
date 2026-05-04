@@ -1,0 +1,40 @@
+.page-header {
+  background: linear-gradient(135deg, var(--est-primary) 0%, #283593 100%);
+  padding-top: 4rem !important;
+  padding-bottom: 4rem !important;
+}
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+
+    i { font-size: 1.2rem; margin-top: 2px; flex-shrink: 0; }
+  }
+}
+
+.success-card {
+  background: linear-gradient(135deg, #f0fff4, #e8f5e9);
+  border: 2px solid #28a74540;
+  animation: fadeIn 0.4s ease;
+}
+
+.success-icon {
+  animation: bounceIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounceIn {
+  0%   { transform: scale(0.5); opacity: 0; }
+  70%  { transform: scale(1.1); }
+  100% { transform: scale(1);   opacity: 1; }
+}

@@ -1,0 +1,141 @@
+<div class="page-header py-5 text-white text-center">
+  <div class="container">
+    <h1 class="fw-bold display-5"><i class="bi bi-envelope me-2"></i>Contact</h1>
+    <p class="lead opacity-75">Nous sommes à votre écoute — répondons dans les 48h</p>
+  </div>
+</div>
+
+<div class="container py-5">
+  <div class="row g-5">
+
+    <!-- ── FORMULAIRE ── -->
+    <div class="col-lg-7">
+
+      <!-- SUCCÈS -->
+      <div class="success-card text-center p-5 rounded-3 mb-4" *ngIf="submitted">
+        <div class="success-icon mb-3">
+          <i class="bi bi-check-circle-fill text-success display-3"></i>
+        </div>
+        <h4 class="fw-bold text-success mb-2">Message envoyé !</h4>
+        <p class="text-muted mb-4">
+          Merci pour votre message. L'équipe EST Events vous répondra dans les 48h.
+        </p>
+        <button class="btn btn-outline-primary" (click)="resetForm()">
+          <i class="bi bi-arrow-left me-2"></i>Envoyer un autre message
+        </button>
+      </div>
+
+      <!-- FORMULAIRE -->
+      <div class="card shadow-sm p-4" *ngIf="!submitted">
+        <h5 class="fw-bold mb-4" style="color:var(--est-primary)">
+          <i class="bi bi-send me-2"></i>Envoyer un message
+        </h5>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Nom complet <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="nom"
+                [class.is-invalid]="f('nom')" placeholder="Votre nom">
+              <div class="invalid-feedback">{{ getError('nom') }}</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
+              <input type="email" class="form-control" formControlName="email"
+                [class.is-invalid]="f('email')" placeholder="votre&#64;email.ma">
+              <div class="invalid-feedback">{{ getError('email') }}</div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Sujet <span class="text-danger">*</span></label>
+            <select class="form-select" formControlName="sujet">
+              <option *ngFor="let s of sujets" [value]="s">{{ s }}</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+              Message <span class="text-danger">*</span>
+              <span class="text-muted small fw-normal ms-2">(min. 20 caractères)</span>
+            </label>
+            <textarea class="form-control" formControlName="message" rows="5"
+              [class.is-invalid]="f('message')"
+              placeholder="Décrivez votre demande..."></textarea>
+            <div class="invalid-feedback">{{ getError('message') }}</div>
+            <div class="text-end small text-muted mt-1">
+              {{ form.get('message')?.value?.length || 0 }} / 20 min
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" formControlName="cgu" id="cguCheck"
+                [class.is-invalid]="f('cgu')">
+              <label class="form-check-label" for="cguCheck">
+                J'accepte les <a href="#" class="text-warning">conditions générales d'utilisation</a>
+                <span class="text-danger">*</span>
+              </label>
+              <div class="invalid-feedback">{{ getError('cgu') }}</div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-warning fw-bold px-5"
+            [disabled]="submitting">
+            <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2"></span>
+            <i *ngIf="!submitting" class="bi bi-send me-2"></i>
+            {{ submitting ? 'Envoi en cours...' : 'Envoyer le message' }}
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ── INFOS CONTACT ── -->
+    <div class="col-lg-5">
+      <div class="card shadow-sm p-4 mb-4">
+        <h5 class="fw-bold mb-4" style="color:var(--est-primary)">
+          <i class="bi bi-building me-2"></i>EST Dakhla
+        </h5>
+        <ul class="list-unstyled contact-list">
+          <li>
+            <i class="bi bi-geo-alt-fill text-warning"></i>
+            <div>
+              <div class="fw-semibold">Adresse</div>
+              <div class="text-muted small">Avenue des FAR, Dakhla 73000, Maroc</div>
+            </div>
+          </li>
+          <li>
+            <i class="bi bi-telephone-fill text-warning"></i>
+            <div>
+              <div class="fw-semibold">Téléphone</div>
+              <div class="text-muted small">+212 528 XX XX XX</div>
+            </div>
+          </li>
+          <li>
+            <i class="bi bi-envelope-fill text-warning"></i>
+            <div>
+              <div class="fw-semibold">Email</div>
+              <div class="text-muted small">contact&#64;est-dakhla.ac.ma</div>
+            </div>
+          </li>
+          <li>
+            <i class="bi bi-clock-fill text-warning"></i>
+            <div>
+              <div class="fw-semibold">Horaires</div>
+              <div class="text-muted small">Lundi – Vendredi : 8h00 – 17h00</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- CARTE -->
+      <div class="rounded-3 overflow-hidden shadow-sm">
+        <iframe
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-16.0073,23.6648,-15.9073,23.7048&layer=mapnik&marker=23.6848,-15.9573"
+          width="100%" height="250" style="border:0;" loading="lazy" title="EST Dakhla">
+        </iframe>
+      </div>
+    </div>
+
+  </div>
+</div>

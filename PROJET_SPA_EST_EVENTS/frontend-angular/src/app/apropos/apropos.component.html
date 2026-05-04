@@ -1,0 +1,104 @@
+<!-- HERO -->
+<div class="apropos-hero text-white text-center py-5">
+  <div class="container py-3">
+    <div class="hero-logo mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" width="220" height="55">
+        <circle cx="25" cy="25" r="20" fill="rgba(255,255,255,0.1)" stroke="#FFB300" stroke-width="1.5"/>
+        <path d="M16 25 L22 18 L34 18 L34 32 L16 32 Z" fill="none" stroke="#FFB300" stroke-width="2"/>
+        <line x1="19" y1="22" x2="31" y2="22" stroke="#FFB300" stroke-width="1.5"/>
+        <line x1="19" y1="25" x2="31" y2="25" stroke="#FFB300" stroke-width="1.5"/>
+        <line x1="19" y1="28" x2="27" y2="28" stroke="#FFB300" stroke-width="1.5"/>
+        <circle cx="25" cy="25" r="20" fill="none" stroke="#FFB300" stroke-width="1.5"/>
+        <text x="52" y="20" font-family="Segoe UI, sans-serif" font-weight="700" font-size="16" fill="white">EST</text>
+        <text x="52" y="38" font-family="Segoe UI, sans-serif" font-weight="400" font-size="13" fill="#FFB300">Events</text>
+      </svg>
+    </div>
+    <h1 class="display-5 fw-bold mb-2">À propos du projet</h1>
+    <p class="lead opacity-75 mb-0">
+      Application Web Full-Stack — CDL 1ère Année · EST Dakhla · {{ academicYear }}
+    </p>
+  </div>
+</div>
+
+<div class="container py-5">
+
+  <!-- CARTE AUTEUR -->
+  <div class="row justify-content-center mb-5">
+    <div class="col-lg-9">
+      <div class="author-hero-card">
+        <div class="d-flex flex-column flex-md-row align-items-center gap-4">
+          <div class="author-big-avatar">JA</div>
+          <div class="flex-grow-1">
+            <div class="author-badge mb-2">
+              <i class="bi bi-mortarboard-fill me-1"></i>Concepteur &amp; Réalisateur
+            </div>
+            <h2 class="author-fullname mb-1">JOUMAIL Abderrahmane</h2>
+            <p class="author-school mb-3">
+              <i class="bi bi-building me-1 text-warning"></i>
+              École Supérieure de Technologie de Dakhla · CDL — 1ère Année
+            </p>
+            <div class="d-flex flex-wrap gap-2">
+              <a href="mailto:joumailabderrahmen@gmail.com" class="contact-pill">
+                <i class="bi bi-envelope-fill me-2"></i>joumailabderrahmen&#64;gmail.com
+              </a>
+              <span class="contact-pill secondary">
+                <i class="bi bi-calendar3 me-2"></i>Année Universitaire {{ academicYear }}
+              </span>
+            </div>
+          </div>
+          <div class="author-deco">
+            <i class="bi bi-code-slash"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FONCTIONNALITÉS -->
+  <h3 class="section-title mb-4">Fonctionnalités développées</h3>
+  <div class="row g-3 mb-5">
+    <div class="col-md-6 col-lg-4" *ngFor="let f of features">
+      <div class="feature-pill">
+        <i class="bi {{ f.icon }} feature-icon"></i>
+        <div>
+          <div class="fw-semibold small">{{ f.title }}</div>
+          <div class="text-muted" style="font-size:.8rem">{{ f.desc }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STACK TECHNIQUE -->
+  <h3 class="section-title mb-4">Stack technique</h3>
+  <div class="d-flex flex-wrap gap-2 mb-5">
+    <div class="stack-badge" *ngFor="let s of stack" [style.border-color]="s.color" [style.color]="s.color">
+      <i class="bi {{ s.icon }} me-1"></i>{{ s.label }}
+    </div>
+  </div>
+
+  <!-- INFOS PROJET -->
+  <div class="row g-4">
+    <div class="col-lg-6">
+      <div class="info-card">
+        <h5 class="text-warning mb-3"><i class="bi bi-info-circle-fill me-2"></i>Le projet</h5>
+        <p class="text-muted mb-0">
+          EST Events est une <strong>Single-Page Application</strong> full-stack développée dans
+          le cadre du module <em>Développement Web Avancé</em>. Elle centralise la gestion des
+          événements de l'EST Dakhla : découverte, réservation, suivi et administration.
+        </p>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="info-card">
+        <h5 class="text-warning mb-3"><i class="bi bi-trophy-fill me-2"></i>Objectifs atteints</h5>
+        <ul class="text-muted mb-0 ps-3">
+          <li>Architecture MVC backend + SPA Angular</li>
+          <li>Sécurité JWT, Helmet, CORS, Rate-limiting</li>
+          <li>APIs HTML5 : WebSocket, WebRTC, Geolocation, Canvas</li>
+          <li>69 tests unitaires Jest + Jasmine (100% passing)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>

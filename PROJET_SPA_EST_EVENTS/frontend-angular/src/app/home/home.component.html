@@ -1,0 +1,198 @@
+<!-- HERO SECTION -->
+<section class="hero-section position-relative overflow-hidden">
+  <video class="hero-video" autoplay muted loop playsinline poster="assets/images/hero-poster.jpg">
+    <source src="assets/videos/hero-banner.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content text-white text-center px-3">
+    <h1 class="hero-title display-4 fw-bold mb-3">
+      Plateforme de Réservation<br>
+      <span class="text-warning">d'Événements EST</span>
+    </h1>
+    <p class="hero-subtitle lead mb-4 mx-auto">
+      Découvrez, participez et connectez-vous aux événements<br>
+      de l'École Supérieure de Technologie de Dakhla
+    </p>
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+      <a routerLink="/events" class="btn btn-warning btn-lg px-4 fw-bold">
+        <i class="bi bi-calendar-event me-2"></i>Découvrir les événements
+      </a>
+      <a href="#about" class="btn btn-outline-light btn-lg px-4">
+        <i class="bi bi-info-circle me-2"></i>En savoir plus
+      </a>
+    </div>
+  </div>
+  <!-- Audio player flottant -->
+  <button class="audio-btn btn btn-dark btn-sm position-fixed" (click)="toggleAudio()" title="Musique d'ambiance">
+    <i class="bi" [class.bi-volume-up-fill]="isAudioPlaying" [class.bi-volume-mute-fill]="!isAudioPlaying"></i>
+  </button>
+  <audio #audioPlayer loop preload="none">
+    <source src="assets/audio/ambient-music.mp3" type="audio/mpeg">
+  </audio>
+</section>
+
+<!-- STATS SECTION -->
+<section class="stats-section py-5" style="background: var(--est-primary);">
+  <div class="container">
+    <div class="row g-4 text-center text-white">
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <i class="bi bi-calendar-check fs-2 text-warning mb-2"></i>
+          <div class="stat-number display-6 fw-bold">{{ animatedStats.events }}</div>
+          <div class="stat-label">Événements</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <i class="bi bi-gift fs-2 text-warning mb-2"></i>
+          <div class="stat-number display-6 fw-bold">{{ animatedStats.free }}</div>
+          <div class="stat-label">Gratuits</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <i class="bi bi-check-circle fs-2 text-warning mb-2"></i>
+          <div class="stat-number display-6 fw-bold">{{ animatedStats.reservations }}</div>
+          <div class="stat-label">Réservations</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <i class="bi bi-grid fs-2 text-warning mb-2"></i>
+          <div class="stat-number display-6 fw-bold">{{ animatedStats.categories }}</div>
+          <div class="stat-label">Catégories</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FONCTIONNALITÉS -->
+<section class="py-5 bg-white">
+  <div class="container">
+    <h2 class="section-title text-center mb-5">Pourquoi choisir EST Events ?</h2>
+    <div class="row g-4">
+      <div class="col-md-4" *ngFor="let f of features">
+        <div class="card h-100 text-center p-0 overflow-hidden">
+          <img [src]="f.image" class="card-img-top feature-img" [alt]="f.title">
+          <div class="card-body p-4">
+            <i class="bi {{ f.icon }} fs-2 text-warning mb-2"></i>
+            <h5 class="fw-bold" style="color: var(--est-primary)">{{ f.title }}</h5>
+            <p class="text-muted small">{{ f.desc }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- À PROPOS -->
+<section id="about" class="py-5" style="background: var(--est-light);">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <img src="assets/images/about-section.jpg" alt="Étudiants EST Dakhla"
+          class="img-fluid rounded-3 shadow-lg w-100" style="object-fit:cover; max-height:400px;">
+      </div>
+      <div class="col-lg-6">
+        <h2 class="section-title text-start mb-4" style="color: var(--est-primary)">
+          L'EST Dakhla au cœur de votre vie estudiantine
+        </h2>
+        <p class="text-muted mb-3">
+          L'École Supérieure de Technologie de Dakhla propose une plateforme numérique moderne
+          pour faciliter l'accès à la vie culturelle, sportive et académique du campus.
+        </p>
+        <p class="text-muted mb-4">
+          Réservez vos places, participez aux événements, échangez avec vos camarades
+          via le chat en temps réel et gérez votre profil étudiant depuis un seul endroit.
+        </p>
+        <div class="d-flex gap-3 flex-wrap">
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-shield-check fs-4 text-warning"></i>
+            <span class="small fw-semibold">Réservation sécurisée</span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-lightning fs-4 text-warning"></i>
+            <span class="small fw-semibold">Confirmation instantanée</span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-phone fs-4 text-warning"></i>
+            <span class="small fw-semibold">100% responsive</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ÉVÉNEMENTS À VENIR -->
+<section class="py-5 bg-white">
+  <div class="container">
+    <h2 class="section-title text-center mb-5">Prochains Événements</h2>
+    <div class="text-center py-4" *ngIf="loading">
+      <div class="spinner-border text-primary" role="status"></div>
+    </div>
+    <div class="row g-4" *ngIf="!loading">
+      <div class="col-md-4" *ngFor="let event of upcomingEvents">
+        <div class="card h-100 overflow-hidden">
+          <div class="event-img-wrapper">
+            <img [src]="getImage(event)"
+              [alt]="event.title" class="card-img-top event-card-img"
+              (error)="$any($event.target).src='assets/images/event-' + event.category + '.jpg'">
+            <span class="badge position-absolute top-0 end-0 m-2"
+              [class]="event.isFree ? 'bg-success' : 'bg-warning text-dark'">
+              {{ event.isFree ? 'GRATUIT' : event.price + ' MAD' }}
+            </span>
+          </div>
+          <div class="card-body">
+            <span class="badge bg-primary mb-2">{{ getCategoryLabel(event.category) }}</span>
+            <h6 class="fw-bold">{{ event.title }}</h6>
+            <p class="text-muted small mb-2">
+              <i class="bi bi-calendar3 me-1"></i>{{ event.date | date:'dd MMM yyyy' }}
+            </p>
+            <p class="text-muted small mb-0">
+              <i class="bi bi-geo-alt me-1"></i>{{ event.location }}
+            </p>
+          </div>
+          <div class="card-footer bg-transparent border-0 pb-3">
+            <a [routerLink]="['/events', event._id]" class="btn btn-outline-primary btn-sm w-100">
+              Voir les détails <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <a routerLink="/events" class="btn btn-warning px-5 fw-bold">
+        <i class="bi bi-grid me-2"></i>Voir tous les événements
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TÉMOIGNAGES -->
+<section class="py-5" style="background: var(--est-primary);">
+  <div class="container">
+    <h2 class="section-title text-center text-white mb-5">Ce que disent nos étudiants</h2>
+    <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item" *ngFor="let t of testimonials; let i = index" [class.active]="i === 0">
+          <div class="d-flex justify-content-center">
+            <div class="testimonial-card text-center p-4 rounded-3 bg-white shadow mx-3" style="max-width:600px;">
+              <div class="avatar-circle mx-auto mb-3">{{ t.avatar }}</div>
+              <p class="fst-italic text-muted mb-3">"{{ t.text }}"</p>
+              <h6 class="fw-bold mb-0" style="color: var(--est-primary)">{{ t.name }}</h6>
+              <small class="text-warning">{{ t.filiere }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  </div>
+</section>

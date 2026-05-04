@@ -1,0 +1,125 @@
+<div class="page-header py-5 text-white text-center">
+  <div class="container">
+    <h1 class="fw-bold display-5"><i class="bi bi-calendar-event me-2"></i>Événements</h1>
+    <p class="lead opacity-75">Découvrez tous les événements de l'EST Dakhla</p>
+  </div>
+</div>
+
+<div class="container py-5">
+
+  <!-- BARRE DE RECHERCHE + FILTRES PRIX -->
+  <div class="row g-3 mb-4 align-items-center">
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
+        <input type="text" class="form-control" placeholder="Rechercher un événement..."
+          [(ngModel)]="searchText" (ngModelChange)="applyFilters()">
+        <button *ngIf="searchText" class="btn btn-outline-secondary" (click)="searchText=''; applyFilters()">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-md-6 d-flex gap-2 justify-content-md-end flex-wrap">
+      <button class="btn btn-sm"
+        [class.btn-secondary]="activePriceFilter==='all'"
+        [class.btn-outline-secondary]="activePriceFilter!=='all'"
+        (click)="setPriceFilter('all')">Tous les prix</button>
+      <button class="btn btn-sm"
+        [class.btn-success]="activePriceFilter==='free'"
+        [class.btn-outline-success]="activePriceFilter!=='free'"
+        (click)="setPriceFilter('free')">
+        <i class="bi bi-gift me-1"></i>Gratuit
+      </button>
+      <button class="btn btn-sm"
+        [class.btn-warning]="activePriceFilter==='paid'"
+        [class.btn-outline-warning]="activePriceFilter!=='paid'"
+        (click)="setPriceFilter('paid')">
+        <i class="bi bi-tag me-1"></i>Payant
+      </button>
+    </div>
+  </div>
+
+  <!-- TABS CATÉGORIES -->
+  <ul class="nav nav-tabs mb-4 flex-nowrap overflow-auto">
+    <li class="nav-item" *ngFor="let cat of categories">
+      <button class="nav-link text-nowrap"
+        [class.active]="activeCategory === cat.key"
+        (click)="setCategory(cat.key)">
+        {{ cat.label }}
+        <span class="badge bg-secondary ms-1 small" *ngIf="cat.key === 'all'">{{ allEvents.length }}</span>
+      </button>
+    </li>
+  </ul>
+
+  <!-- SPINNER -->
+  <div class="text-center py-5" *ngIf="loading">
+    <div class="spinner-border text-primary" style="width:3rem;height:3rem;" role="status"></div>
+    <p class="mt-3 text-muted">Chargement des événements...</p>
+  </div>
+
+  <!-- AUCUN RÉSULTAT -->
+  <div class="text-center py-5" *ngIf="!loading && filteredEvents.length === 0">
+    <i class="bi bi-calendar-x display-3 text-muted"></i>
+    <h5 class="mt-3 text-muted">Aucun événement trouvé</h5>
+    <p class="text-muted small">Essayez de modifier vos filtres ou votre recherche.</p>
+    <button class="btn btn-outline-primary" (click)="searchText=''; setCategory('all'); setPriceFilter('all')">
+      Réinitialiser les filtres
+    </button>
+  </div>
+
+  <!-- GRILLE ÉVÉNEMENTS -->
+  <div class="row g-4" *ngIf="!loading && filteredEvents.length > 0">
+    <div class="col-sm-6 col-lg-4" *ngFor="let event of filteredEvents">
+      <div class="card h-100 overflow-hidden event-card">
+        <div class="event-img-wrapper position-relative">
+          <img [src]="getImage(event)" [alt]="event.title"
+            class="card-img-top event-img"
+            (error)="onImageError($event, event.category)">
+          <span class="badge position-absolute top-0 start-0 m-2 category-badge">
+            {{ getCategoryLabel(event.category) }}
+          </span>
+          <span class="badge position-absolute top-0 end-0 m-2"
+            [class.bg-success]="event.isFree"
+            [class.bg-warning]="!event.isFree"
+            [class.text-dark]="!event.isFree">
+            {{ event.isFree ? 'GRATUIT' : event.price + ' MAD' }}
+          </span>
+        </div>
+        <div class="card-body d-flex flex-column">
+          <h6 class="fw-bold mb-2 event-title">{{ event.title }}</h6>
+          <p class="text-muted small mb-2 flex-grow-1 event-desc">{{ event.description }}</p>
+          <div class="event-meta small text-muted">
+            <div class="mb-1">
+              <i class="bi bi-calendar3 me-1 text-primary"></i>
+              {{ event.date | date:'EEEE d MMMM yyyy' : '' : 'fr' }}
+            </div>
+            <div class="mb-1">
+              <i class="bi bi-clock me-1 text-primary"></i>
+              {{ event.date | date:'HH:mm' }}
+            </div>
+            <div>
+              <i class="bi bi-geo-alt me-1 text-primary"></i>
+              {{ event.location }}
+            </div>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent border-0 pb-3">
+          <div class="d-flex gap-2">
+            <a [routerLink]="['/events', event._id]"
+              class="btn btn-outline-primary btn-sm flex-grow-1">
+              <i class="bi bi-eye me-1"></i>Détails
+            </a>
+            <div class="text-muted small d-flex align-items-center">
+              <i class="bi bi-people me-1"></i>{{ event.capacity }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPTEUR RÉSULTATS -->
+  <p class="text-muted small mt-4 text-end" *ngIf="!loading && filteredEvents.length > 0">
+    {{ filteredEvents.length }} événement{{ filteredEvents.length > 1 ? 's' : '' }} affiché{{ filteredEvents.length > 1 ? 's' : '' }}
+  </p>
+</div>

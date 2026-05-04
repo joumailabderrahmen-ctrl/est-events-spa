@@ -1,0 +1,89 @@
+<footer class="pt-5 pb-3 mt-auto">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- BRAND -->
+      <div class="col-lg-4">
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <!-- Logo SVG inline adapté pour fond sombre -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" width="160" height="40">
+            <circle cx="25" cy="25" r="20" fill="rgba(255,255,255,0.08)"/>
+            <path d="M16 25 L22 18 L34 18 L34 32 L16 32 Z" fill="none" stroke="#FFB300" stroke-width="2"/>
+            <line x1="19" y1="22" x2="31" y2="22" stroke="#FFB300" stroke-width="1.5"/>
+            <line x1="19" y1="25" x2="31" y2="25" stroke="#FFB300" stroke-width="1.5"/>
+            <line x1="19" y1="28" x2="27" y2="28" stroke="#FFB300" stroke-width="1.5"/>
+            <circle cx="25" cy="25" r="20" fill="none" stroke="#FFB300" stroke-width="1.5"/>
+            <text x="52" y="20" font-family="Segoe UI, sans-serif" font-weight="700" font-size="16" fill="white">EST</text>
+            <text x="52" y="38" font-family="Segoe UI, sans-serif" font-weight="400" font-size="13" fill="#FFB300">Events</text>
+          </svg>
+        </div>
+        <p class="text-white-50 small">
+          Plateforme de réservation d'événements de l'École Supérieure de Technologie de Dakhla.
+          Découvrez, participez, connectez-vous.
+        </p>
+        <div class="d-flex gap-3 mt-3">
+          <a href="#" class="text-white-50 fs-5"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="text-white-50 fs-5"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="text-white-50 fs-5"><i class="bi bi-linkedin"></i></a>
+          <a href="#" class="text-white-50 fs-5"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+
+      <!-- NAVIGATION -->
+      <div class="col-lg-2 col-6">
+        <h6 class="text-warning fw-bold mb-3">Navigation</h6>
+        <ul class="list-unstyled">
+          <li class="mb-2"><a routerLink="/"           class="text-white-50 text-decoration-none small">Accueil</a></li>
+          <li class="mb-2"><a routerLink="/events"     class="text-white-50 text-decoration-none small">Événements</a></li>
+          <li class="mb-2"><a routerLink="/reservation"class="text-white-50 text-decoration-none small">Réservation</a></li>
+          <li class="mb-2"><a routerLink="/dashboard"  class="text-white-50 text-decoration-none small">Dashboard</a></li>
+          <li class="mb-2"><a routerLink="/contact"    class="text-white-50 text-decoration-none small">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- OUTILS -->
+      <div class="col-lg-2 col-6">
+        <h6 class="text-warning fw-bold mb-3">Outils</h6>
+        <ul class="list-unstyled">
+          <li class="mb-2"><a routerLink="/weblab" class="text-white-50 text-decoration-none small">WebLab</a></li>
+          <li class="mb-2"><a routerLink="/apis"   class="text-white-50 text-decoration-none small">APIs Avancées</a></li>
+          <li class="mb-2"><a routerLink="/profil" class="text-white-50 text-decoration-none small">Mon Profil</a></li>
+        </ul>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="col-lg-4">
+        <h6 class="text-warning fw-bold mb-3">Contact</h6>
+        <ul class="list-unstyled">
+          <li class="mb-2 text-white-50 small">
+            <i class="bi bi-geo-alt me-2 text-warning"></i>Avenue des FAR, Dakhla 73000, Maroc
+          </li>
+          <li class="mb-2 text-white-50 small">
+            <i class="bi bi-telephone me-2 text-warning"></i>+212 528 XX XX XX
+          </li>
+          <li class="mb-2 text-white-50 small">
+            <i class="bi bi-envelope me-2 text-warning"></i>contact&#64;est-dakhla.ac.ma
+          </li>
+          <li class="mb-2 text-white-50 small">
+            <i class="bi bi-clock me-2 text-warning"></i>Lun–Ven : 8h00 – 17h00
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="border-secondary mt-4">
+
+    <!-- BARRE BAS : copyright -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+
+      <p class="text-white-50 small mb-0">
+        &copy; {{ currentYear }} EST Events — École Supérieure de Technologie de Dakhla
+      </p>
+
+      <a routerLink="/apropos" class="text-white-50 small text-decoration-none">
+        <i class="bi bi-info-circle me-1"></i>À propos du projet
+      </a>
+
+    </div>
+  </div>
+</footer>

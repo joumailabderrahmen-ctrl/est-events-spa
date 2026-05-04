@@ -1,0 +1,12 @@
+<!-- Barre de progression globale HTTP -->
+<div class="global-loader" *ngIf="isLoading$ | async">
+  <div class="loader-bar"></div>
+</div>
+
+<div class="page-wrapper">
+  <app-navbar></app-navbar>
+  <main>
+    <router-outlet #outlet="outlet"></router-outlet>
+  </main>
+  <app-footer></app-footer>
+</div>

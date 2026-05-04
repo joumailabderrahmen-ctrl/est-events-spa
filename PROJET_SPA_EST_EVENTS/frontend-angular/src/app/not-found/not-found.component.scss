@@ -1,0 +1,21 @@
+.not-found-page {
+  min-height: 70vh;
+  background: linear-gradient(135deg, #f5f7ff 0%, #e8eaf6 100%);
+}
+
+.error-code {
+  font-size: 8rem;
+  font-weight: 900;
+  line-height: 1;
+  color: transparent;
+  background: linear-gradient(135deg, var(--est-primary), #FFB300);
+  -webkit-background-clip: text;
+  background-clip: text;
+  margin-bottom: 1rem;
+  animation: fadeDown 0.5s ease;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

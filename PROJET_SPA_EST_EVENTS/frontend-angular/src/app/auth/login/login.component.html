@@ -1,0 +1,40 @@
+<section class="auth-section">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <i class="bi bi-mortarboard-fill"></i>
+      <h2>EST Events</h2>
+      <p>Connexion à votre compte</p>
+    </div>
+
+    <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" formControlName="email" class="form-control"
+               [class.is-invalid]="form.get('email')?.invalid && form.get('email')?.touched"
+               placeholder="exemple@est-dakhla.ac.ma">
+        <div class="invalid-feedback">Email invalide</div>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Mot de passe</label>
+        <input type="password" formControlName="password" class="form-control"
+               [class.is-invalid]="form.get('password')?.invalid && form.get('password')?.touched"
+               placeholder="••••••••">
+        <div class="invalid-feedback">Mot de passe requis</div>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100" [disabled]="loading">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+        {{ loading ? 'Connexion...' : 'Se connecter' }}
+      </button>
+    </form>
+
+    <hr>
+    <p class="text-center mb-0">
+      Pas encore de compte ?
+      <a routerLink="/register" class="text-warning fw-bold">S'inscrire</a>
+    </p>
+  </div>
+</section>

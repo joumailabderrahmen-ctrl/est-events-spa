@@ -1,0 +1,92 @@
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+:root {
+  --est-primary: #1a237e;
+  --est-gold: #FFB300;
+  --est-secondary: #283593;
+  --est-light: #f5f7ff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.navbar-brand img { height: 40px; }
+
+.btn-est {
+  background-color: var(--est-primary);
+  color: #fff;
+  border: none;
+  &:hover { background-color: var(--est-secondary); color: #fff; }
+}
+
+.btn-gold {
+  background-color: var(--est-gold);
+  color: #fff;
+  border: none;
+  &:hover { background-color: darken(#FFB300, 10%); color: #fff; }
+}
+
+.badge-gratuit {
+  background-color: #28a745;
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.badge-payant {
+  background-color: var(--est-gold);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+}
+
+.section-title {
+  color: var(--est-primary);
+  font-weight: 700;
+  position: relative;
+  &::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--est-gold);
+    margin: 8px auto 0;
+  }
+}
+
+.spinner-overlay {
+  position: fixed; inset: 0;
+  background: rgba(255,255,255,0.8);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999;
+}
+
+footer {
+  background-color: var(--est-primary);
+  color: #fff;
+}
+
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  > main { flex: 1; }
+}

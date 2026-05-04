@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" width="200" height="50">
+  <circle cx="25" cy="25" r="20" fill="#1a237e"/>
+  <path d="M16 25 L22 18 L34 18 L34 32 L16 32 Z" fill="none" stroke="#FFB300" stroke-width="2"/>
+  <line x1="19" y1="22" x2="31" y2="22" stroke="#FFB300" stroke-width="1.5"/>
+  <line x1="19" y1="25" x2="31" y2="25" stroke="#FFB300" stroke-width="1.5"/>
+  <line x1="19" y1="28" x2="27" y2="28" stroke="#FFB300" stroke-width="1.5"/>
+  <circle cx="25" cy="25" r="20" fill="none" stroke="#FFB300" stroke-width="1.5"/>
+  <text x="52" y="20" font-family="Segoe UI, sans-serif" font-weight="700" font-size="16" fill="#1a237e">EST</text>
+  <text x="52" y="38" font-family="Segoe UI, sans-serif" font-weight="400" font-size="13" fill="#FFB300">Events</text>
+</svg>
