@@ -29,6 +29,3 @@ Thumbs.db
 .vscode/*
 !.vscode/settings.json
 .idea/
-
-# ── Claude Code (mémoire locale) ─────────────────────
-.claude/
