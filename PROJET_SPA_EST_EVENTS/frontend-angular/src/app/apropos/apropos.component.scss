@@ -66,6 +66,8 @@
   text-decoration: none; transition: all 0.2s;
   &:hover { background: #FFB300; color: #1a237e; transform: translateY(-1px); }
   &.secondary { background: transparent; color: #666; border: 1px solid #ddd; pointer-events: none; }
+  &.github-pill { background: #24292e; }
+  &.github-pill:hover { background: #1a237e; color: white; }
 }
 
 .feature-pill {

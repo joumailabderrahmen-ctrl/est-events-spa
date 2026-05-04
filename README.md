@@ -1,6 +1,10 @@
 # EST Events — Plateforme de Gestion d'Événements
 
+[![GitHub](https://img.shields.io/badge/GitHub-est--events--spa-1a237e?style=flat&logo=github)](https://github.com/joumailabderrahmen-ctrl/est-events-spa)
+
 Application Web Full-Stack développée dans le cadre du module **Développement Web Avancé** à l'École Supérieure de Technologie de Dakhla.
+
+> **Dépôt** : https://github.com/joumailabderrahmen-ctrl/est-events-spa
 
 ---
 

@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 export class AproposComponent {
   currentYear   = new Date().getFullYear();
   academicYear  = '2025–2026';
+  githubUrl     = 'https://github.com/joumailabderrahmen-ctrl/est-events-spa';
 
   stack = [
     { icon: 'bi-diagram-3-fill',    label: 'Angular 17',           color: '#dd0031' },
