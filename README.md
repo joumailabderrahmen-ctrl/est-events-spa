@@ -43,7 +43,7 @@ Application Web Full-Stack développée dans le cadre du module **Développement
 ### 1. Cloner le dépôt
 
 ```bash
-git clone <url-du-repo>
+git clone https://github.com/joumailabderrahmen-ctrl/est-events-spa.git
 cd Platform_GRE_EST
 ```
 
