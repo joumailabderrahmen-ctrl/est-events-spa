@@ -48,21 +48,15 @@ mongod --dbpath "C:\data\db"
 
 Laisser ce terminal ouvert.
 
-### 3. Configurer le backend
+### 3. Installer les dépendances backend
 
 ```bash
 cd backend-node
 npm install
 ```
 
-Créer le fichier `.env` à la racine de `backend-node/` :
-
-```env
-PORT=3000
-MONGODB_URI=mongodb://localhost:27017/est_events
-CLIENT_URL=http://localhost:4200
-JWT_SECRET=est_events_secret_key_2025_dakhla
-```
+> Le fichier `.env` est déjà inclus dans le dépôt (prototype pédagogique).  
+> Aucune configuration manuelle requise.
 
 ### 4. Peupler la base de données (seed)
 
