@@ -6,9 +6,8 @@ node_modules/
 .env.local
 .env.*.local
 
-# ── Images uploadées (générées à l'exécution) ─────────
-PROJET_SPA_EST_EVENTS/backend-node/uploads/*
-!PROJET_SPA_EST_EVENTS/backend-node/uploads/.gitkeep
+# ── Images uploadées (prototype : incluses dans le dépôt) ─────
+# uploads/* non ignoré intentionnellement
 
 # ── Build Angular ─────────────────────────────────────
 dist/
