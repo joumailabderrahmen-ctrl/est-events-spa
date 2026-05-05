@@ -69,6 +69,8 @@ npm run seed       # Peuple la BDD (événements + utilisateurs + réservations)
 npm run dev        # Lance le serveur sur http://localhost:3000
 ```
 
+> Le fichier `.env` est déjà inclus dans le dépôt — aucune configuration manuelle requise.
+
 ### 4. Frontend
 
 ```bash
@@ -131,19 +133,6 @@ npm test
 # Frontend (Jasmine / Karma)
 cd PROJET_SPA_EST_EVENTS/frontend-angular
 ng test --watch=false
-```
-
----
-
-## Variables d'environnement
-
-Créer `PROJET_SPA_EST_EVENTS/backend-node/.env` :
-
-```env
-PORT=3000
-MONGODB_URI=mongodb://localhost:27017/est_events
-JWT_SECRET=est_events_secret_key_2025_dakhla
-CLIENT_URL=http://localhost:4200
 ```
 
 ---
