@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { EventService } from '../shared/services/event.service';
 import { Event } from '../shared/models/event.model';
 
@@ -7,8 +7,9 @@ import { Event } from '../shared/models/event.model';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('audioPlayer') audioRef!: ElementRef<HTMLAudioElement>;
+  @ViewChild('heroVideo')   videoRef!: ElementRef<HTMLVideoElement>;
 
   stats = { totalEvents: 0, freeEvents: 0, totalReservations: 0, byCategory: [] as any[] };
   upcomingEvents: Event[] = [];
@@ -29,6 +30,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   ];
 
   constructor(private eventService: EventService) {}
+
+  ngAfterViewInit(): void {
+    const video = this.videoRef?.nativeElement;
+    if (video) {
+      video.muted = true;
+      video.play().catch(() => {});
+    }
+  }
 
   ngOnInit(): void {
     this.eventService.getStats().subscribe(data => {

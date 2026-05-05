@@ -1,10 +1,13 @@
 /* HERO */
 .hero-section {
+  position: relative;
+  overflow: hidden;
   height: 100vh;
   min-height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(135deg, #1a237e 0%, #283593 60%, #1a237e 100%);
 }
 
 .hero-video {
