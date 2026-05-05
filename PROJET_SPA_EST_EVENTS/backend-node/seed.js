@@ -9,7 +9,7 @@ const events = [
   {
     title:       'Hackathon EST 2025',
     description: 'Compétition de 24h pour développer des solutions innovantes aux défis locaux. Équipes de 3-5 participants. Prix pour les 3 meilleures équipes.',
-    image:       'event-tech.jpg',
+    image:       'event-1777865221641.png',
     price:       0,
     date:        new Date('2025-11-15T09:00:00'),
     location:    'Salle informatique A, EST Dakhla',
@@ -19,7 +19,7 @@ const events = [
   {
     title:       'Soirée Culturelle Amazighe',
     description: 'Célébration de la richesse culturelle de la région. Musique, danse, gastronomie traditionnelle et exposition artisanale.',
-    image:       'event-culture.jpg',
+    image:       'event-1777865189608.png',
     price:       30,
     date:        new Date('2025-11-22T18:00:00'),
     location:    'Amphithéâtre principal, EST Dakhla',
@@ -29,7 +29,7 @@ const events = [
   {
     title:       'Tournoi de Football Inter-Filières',
     description: 'Tournoi annuel opposant toutes les filières de l\'EST. Phase de groupes + élimination directe. Coupe et médailles pour les finalistes.',
-    image:       'event-sport.jpg',
+    image:       'event-1777864072903.png',
     price:       0,
     date:        new Date('2025-12-05T14:00:00'),
     location:    'Terrain de sport, Campus EST Dakhla',
@@ -39,7 +39,7 @@ const events = [
   {
     title:       'Journée Scientifique & Innovation',
     description: 'Présentation des projets de recherche des étudiants, conférences de chercheurs invités et ateliers pratiques en sciences et technologies.',
-    image:       'event-science.jpg',
+    image:       'event-1777865361921.png',
     price:       50,
     date:        new Date('2025-12-12T08:30:00'),
     location:    'Laboratoires & Salle de conférence, EST Dakhla',
@@ -49,7 +49,7 @@ const events = [
   {
     title:       'Gala Musical de Fin d\'Année',
     description: 'Concert de fin d\'année mettant en scène les talents musicaux des étudiants. Jazz, musique andalouse et fusion moderne.',
-    image:       'event-music.jpg',
+    image:       'event-1777865515607.png',
     price:       80,
     date:        new Date('2025-12-20T19:00:00'),
     location:    'Grande salle des fêtes, Dakhla',
@@ -59,7 +59,7 @@ const events = [
   {
     title:       'Atelier Intelligence Artificielle',
     description: 'Introduction pratique au Machine Learning et à l\'IA générative. Exercices sur Python, TensorFlow et l\'API OpenAI. Niveau débutant-intermédiaire.',
-    image:       'event-tech.jpg',
+    image:       'event-1777865613581.png',
     price:       0,
     date:        new Date('2026-01-10T10:00:00'),
     location:    'Salle informatique B, EST Dakhla',
@@ -69,7 +69,7 @@ const events = [
   {
     title:       'Exposition Artisanat de Dakhla',
     description: 'Exposition vente des créations artisanales locales : poterie, bijoux, tapis et sculptures. Participation de 20 artisans de la région.',
-    image:       'event-culture.jpg',
+    image:       'event-1777865338460.png',
     price:       20,
     date:        new Date('2026-01-25T09:00:00'),
     location:    'Hall principal, EST Dakhla',
@@ -79,7 +79,7 @@ const events = [
   {
     title:       'Championnat de Basketball 3x3',
     description: 'Tournoi de basketball 3 contre 3 ouvert aux étudiants et aux clubs de la ville. Catégories masculin et féminin. Inscription gratuite.',
-    image:       'event-sport.jpg',
+    image:       'event-1777865476584.png',
     price:       0,
     date:        new Date('2026-02-08T10:00:00'),
     location:    'Gymnase de l\'EST Dakhla',
@@ -132,7 +132,6 @@ async function seed() {
 
     // ── Users ─────────────────────────────────────────
     await User.deleteMany({});
-    // On utilise save() pour chaque user afin de déclencher le pre-save hook (hashage)
     const savedUsers = [];
     for (const u of users) {
       const user = new User(u);
@@ -144,7 +143,7 @@ async function seed() {
       console.log(`  - [${u.role}] ${u.name} — ${u.email}`)
     );
 
-    // ── Reservations de test ──────────────────────────
+    // ── Réservations de test ──────────────────────────
     await Reservation.deleteMany({});
     const e0 = insertedEvents[0]; // Hackathon (gratuit)
     const e1 = insertedEvents[1]; // Soirée Culturelle (30 MAD)
@@ -189,8 +188,8 @@ async function seed() {
 
     console.log('\n─────────────────────────────────────────');
     console.log('Comptes de test :');
-    console.log('  Admin  → admin@est-dakhla.ac.ma / admin123');
-    console.log('  Étudiant → ahmed@est.ma / password123');
+    console.log('  Admin    → admin@est-dakhla.ac.ma / admin123');
+    console.log('  Étudiant → ahmed@est.ma           / password123');
     console.log('─────────────────────────────────────────');
 
   } catch (err) {
