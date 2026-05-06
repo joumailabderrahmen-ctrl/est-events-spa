@@ -95,30 +95,66 @@ Ouvrir **http://localhost:4200** dans le navigateur.
 ## Structure du projet
 
 ```
-Platform_GRE_EST/
-├── PROJET_SPA_EST_EVENTS/
-│   ├── backend-node/
-│   │   ├── controllers/       # Logique métier (events, reservations, auth)
-│   │   ├── middleware/        # JWT, CORS, Multer
-│   │   ├── models/            # Schémas Mongoose (Event, Reservation, User)
-│   │   ├── routes/            # Routes API REST
-│   │   ├── tests/             # 69 tests Jest
-│   │   ├── websocket/         # Serveur chat WebSocket
-│   │   ├── seed.js            # Script de peuplement BDD
-│   │   └── server.js          # Point d'entrée Express
-│   └── frontend-angular/
-│       └── src/app/
-│           ├── admin/         # Interface administration
-│           ├── apropos/       # Page À propos
-│           ├── auth/          # Login / Register
-│           ├── dashboard/     # Statistiques Chart.js
-│           ├── events/        # Liste + détail événements
-│           ├── home/          # Page d'accueil
-│           ├── reservation/   # Panier Drag & Drop
-│           ├── shared/        # Services, Guards, Intercepteurs, Navbar, Footer
-│           └── weblab/        # Démo APIs HTML5
-└── Fils/
-    └── RAPPORT_ACADEMIQUE.md
+est-events-spa/
+├── README.md
+└── PROJET_SPA_EST_EVENTS/
+    ├── backend-node/
+    │   ├── config/
+    │   │   └── db.js                    # Connexion MongoDB
+    │   ├── controllers/
+    │   │   ├── authController.js        # Login / Register
+    │   │   ├── eventController.js       # CRUD événements + upload image
+    │   │   └── reservationController.js # Réservations
+    │   ├── middleware/
+    │   │   ├── authenticate.js          # Vérification JWT
+    │   │   ├── requireAdmin.js          # Contrôle rôle admin
+    │   │   └── upload.js                # Multer (upload images)
+    │   ├── models/
+    │   │   ├── Event.js
+    │   │   ├── Reservation.js
+    │   │   └── User.js
+    │   ├── routes/
+    │   │   ├── auth.js
+    │   │   ├── events.js
+    │   │   └── reservations.js
+    │   ├── tests/                       # 69 tests Jest
+    │   ├── uploads/                     # Images des événements
+    │   ├── websocket/
+    │   │   └── chatServer.js            # Chat temps réel (ws)
+    │   ├── .env                         # Variables d'environnement
+    │   ├── seed.js                      # Données de démo
+    │   └── server.js                    # Point d'entrée Express
+    └── frontend-angular/
+        └── src/
+            ├── assets/
+            │   ├── audio/               # Musique d'ambiance
+            │   ├── images/              # Images statiques + logo
+            │   └── videos/              # Vidéo hero page d'accueil
+            └── app/
+                ├── admin/               # Panel administrateur
+                ├── apis-avancees/       # WebSocket · WebRTC · Geolocation · Canvas
+                ├── apropos/             # Page à propos du projet
+                ├── auth/
+                │   ├── login/
+                │   └── register/
+                ├── contact/
+                ├── dashboard/           # Statistiques Chart.js
+                ├── events/
+                │   └── event-detail/
+                ├── home/                # Page d'accueil + hero vidéo
+                ├── not-found/           # Page 404
+                ├── profil/              # Profil + WebRTC/Canvas
+                ├── reservation/         # Panier Drag & Drop
+                ├── weblab/              # Chat WebSocket + carte Leaflet
+                └── shared/
+                    ├── animations/      # Animations de routes Angular
+                    ├── components/
+                    │   ├── navbar/
+                    │   └── footer/
+                    ├── guards/          # AuthGuard · AdminGuard
+                    ├── interceptors/    # AuthInterceptor (JWT)
+                    ├── models/          # Interfaces TypeScript
+                    └── services/        # EventService · AuthService · ...
 ```
 
 ---
